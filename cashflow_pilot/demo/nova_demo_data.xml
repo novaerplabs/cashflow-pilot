@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Company config: threshold high enough that the demo horizon shows
+         a realistic breach, matching the store-screenshot / QA purpose. -->
+    <record id="base.main_company" model="res.company">
+        <field name="nova_min_threshold">500000.0</field>
+    </record>
+
+    <!-- Demo partners (kept local to this module to avoid depending on
+         base's own demo partner ids, which are not stable across builds). -->
+    <record id="nova_demo_partner_customer_1" model="res.partner">
+        <field name="name">Acme Retail (Demo)</field>
+        <field name="company_type">company</field>
+        <field name="customer_rank">1</field>
+    </record>
+    <record id="nova_demo_partner_customer_2" model="res.partner">
+        <field name="name">Blue Harbor Traders (Demo)</field>
+        <field name="company_type">company</field>
+        <field name="customer_rank">1</field>
+    </record>
+    <record id="nova_demo_partner_vendor_1" model="res.partner">
+        <field name="name">Summit Supplies (Demo)</field>
+        <field name="company_type">company</field>
+        <field name="supplier_rank">1</field>
+    </record>
+
+    <!-- Customer invoice, partially paid (AC-02-style residual) -->
+    <record id="nova_demo_invoice_1" model="account.move">
+        <field name="move_type">out_invoice</field>
+        <field name="partner_id" ref="nova_demo_partner_customer_1"/>
+        <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+        <field name="invoice_date_due" eval="(DateTime.today() + relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+        <field name="invoice_line_ids" eval="[(0, 0, {
+            'name': 'Consulting services - Q3',
+            'quantity': 1,
+            'price_unit': 150000.0,
+        })]"/>
+    </record>
+    <function model="account.move" name="action_post" eval="[[ref('nova_demo_invoice_1')]]"/>
+
+    <!-- Customer invoice, no due date set yet (BR-21a readiness scenario) -->
+    <record id="nova_demo_invoice_2" model="account.move">
+        <field name="move_type">out_invoice</field>
+        <field name="partner_id" ref="nova_demo_partner_customer_2"/>
+        <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="invoice_line_ids" eval="[(0, 0, {
+            'name': 'Product bundle - July order',
+            'quantity': 1,
+            'price_unit': 92000.0,
+        })]"/>
+    </record>
+    <function model="account.move" name="action_post" eval="[[ref('nova_demo_invoice_2')]]"/>
+
+    <!-- Vendor bill, due in three weeks -->
+    <record id="nova_demo_bill_1" model="account.move">
+        <field name="move_type">in_invoice</field>
+        <field name="partner_id" ref="nova_demo_partner_vendor_1"/>
+        <field name="invoice_date" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+        <field name="invoice_date_due" eval="(DateTime.today() + relativedelta(days=21)).strftime('%Y-%m-%d')"/>
+        <field name="invoice_line_ids" eval="[(0, 0, {
+            'name': 'Raw materials - July batch',
+            'quantity': 1,
+            'price_unit': 210000.0,
+        })]"/>
+    </record>
+    <function model="account.move" name="action_post" eval="[[ref('nova_demo_bill_1')]]"/>
+
+    <!-- Recurring items -->
+    <record id="nova_demo_recurring_payroll" model="nova.recurring.item">
+        <field name="name">Payroll</field>
+        <field name="direction">out</field>
+        <field name="category_id" ref="nova_category_payroll"/>
+        <field name="amount">280000.0</field>
+        <field name="frequency">monthly</field>
+        <field name="day_rule">28</field>
+        <field name="start_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-01')"/>
+        <field name="state">active</field>
+    </record>
+
+    <record id="nova_demo_recurring_rent" model="nova.recurring.item">
+        <field name="name">Rent</field>
+        <field name="direction">out</field>
+        <field name="category_id" ref="nova_category_rent_utilities"/>
+        <field name="amount">65000.0</field>
+        <field name="frequency">monthly</field>
+        <field name="day_rule">1</field>
+        <field name="start_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-01')"/>
+        <field name="state">active</field>
+    </record>
+
+    <record id="nova_demo_recurring_loan" model="nova.recurring.item">
+        <field name="name">Loan EMI</field>
+        <field name="direction">out</field>
+        <field name="category_id" ref="nova_category_loan_finance"/>
+        <field name="amount">45000.0</field>
+        <field name="frequency">monthly</field>
+        <field name="day_rule">5</field>
+        <field name="start_date" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-05')"/>
+        <field name="state">active</field>
+    </record>
+
+    <!-- Manual one-off items -->
+    <record id="nova_demo_manual_capex" model="nova.manual.item">
+        <field name="name">New warehouse racking (Capex)</field>
+        <field name="direction">out</field>
+        <field name="category_id" ref="nova_category_capex"/>
+        <field name="expected_date" eval="(DateTime.today() + relativedelta(weeks=5)).strftime('%Y-%m-%d')"/>
+        <field name="amount">180000.0</field>
+        <field name="state">planned</field>
+    </record>
+
+    <record id="nova_demo_manual_capital" model="nova.manual.item">
+        <field name="name">Owner capital infusion</field>
+        <field name="direction">in</field>
+        <field name="category_id" ref="nova_category_other_income"/>
+        <field name="expected_date" eval="(DateTime.today() + relativedelta(weeks=8)).strftime('%Y-%m-%d')"/>
+        <field name="amount">300000.0</field>
+        <field name="state">planned</field>
+    </record>
+
+</odoo>

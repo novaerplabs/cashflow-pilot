@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_recurring_revise_wizard_view_form" model="ir.ui.view">
+        <field name="name">nova.recurring.revise.wizard.form</field>
+        <field name="model">nova.recurring.revise.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="item_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="effective_from"/>
+                    <field name="new_amount"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_recurring_revise_wizard_action" model="ir.actions.act_window">
+        <field name="name">Revise Amount</field>
+        <field name="res_model">nova.recurring.revise.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.NovaCockpit">
+        <div class="o_nova_cockpit">
+            <div class="o_nova_cockpit_header d-flex justify-content-between align-items-center p-2">
+                <h3 class="mb-0">Cash Flow Cockpit</h3>
+                <div class="o_nova_cockpit_actions">
+                    <div class="btn-group me-2" role="group">
+                        <button class="btn btn-sm"
+                                t-att-class="state.granularity === 'week' ? 'btn-primary' : 'btn-secondary'"
+                                t-on-click="() => this.setGranularity('week')">
+                            13 Weeks
+                        </button>
+                        <button class="btn btn-sm"
+                                t-att-class="state.granularity === 'month' ? 'btn-primary' : 'btn-secondary'"
+                                t-on-click="() => this.setGranularity('month')">
+                            12 Months
+                        </button>
+                    </div>
+                    <div class="btn-group me-2" role="group">
+                        <button class="btn btn-sm btn-secondary" t-on-click="onExportXlsx">
+                            <i class="fa fa-file-excel-o"/> Excel
+                        </button>
+                        <button class="btn btn-sm btn-secondary" t-on-click="onExportPdf">
+                            <i class="fa fa-file-pdf-o"/> PDF
+                        </button>
+                    </div>
+                    <button class="btn btn-sm btn-primary" t-on-click="onRefresh" t-att-disabled="state.refreshing">
+                        <i class="fa fa-refresh"/> Refresh Now
+                    </button>
+                </div>
+            </div>
+
+            <AlertStrip breachState="state.kpis and state.kpis.breach_state"/>
+            <ReadinessStrip/>
+
+            <KpiCards kpis="state.kpis" loading="state.loadingKpis"/>
+
+            <ForecastGrid
+                grid="state.grid"
+                granularity="state.granularity"
+                loading="state.loadingGrid"
+                onCellEdited.bind="onCellEdited"/>
+
+            <div class="o_nova_cockpit_charts row" t-if="state.grid and !state.loadingGrid">
+                <div class="col-12 col-lg-7">
+                    <TrendChart periods="state.grid.periods"/>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <WaterfallChart periods="state.grid.periods"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

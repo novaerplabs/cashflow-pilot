@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_readiness_issue_view_list" model="ir.ui.view">
+        <field name="name">nova.readiness.issue.list</field>
+        <field name="model">nova.readiness.issue</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false" delete="false">
+                <field name="severity" widget="badge"
+                       decoration-warning="severity == 'warning'"
+                       decoration-info="severity == 'info'"/>
+                <field name="description"/>
+                <field name="record_count"/>
+                <field name="last_checked"/>
+                <button name="action_view_records" type="object" string="View Records" class="btn-link"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_readiness_issue_view_search" model="ir.ui.view">
+        <field name="name">nova.readiness.issue.search</field>
+        <field name="model">nova.readiness.issue</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="filter_warning" string="Warning" domain="[('severity', '=', 'warning')]"/>
+                <filter name="filter_info" string="Info" domain="[('severity', '=', 'info')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_readiness_issue_action" model="ir.actions.act_window">
+        <field name="name">Data Readiness Check</field>
+        <field name="res_model">nova.readiness.issue</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="nova_readiness_issue_action_run_check" model="ir.actions.server">
+        <field name="name">Run Data Readiness Check</field>
+        <field name="model_id" ref="model_nova_readiness_issue"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_run_check()</field>
+        <field name="group_ids" eval="[(4, ref('nova_group_manager'))]"/>
+    </record>
+
+    <menuitem id="nova_menu_readiness"
+              name="Data Readiness Check"
+              parent="nova_menu_configuration"
+              action="nova_readiness_issue_action"
+              sequence="30"
+              groups="nova_group_manager"/>
+
+    <menuitem id="nova_menu_readiness_run_check"
+              name="Run Data Readiness Check"
+              parent="nova_menu_configuration"
+              action="nova_readiness_issue_action_run_check"
+              sequence="31"
+              groups="nova_group_manager"/>
+
+</odoo>

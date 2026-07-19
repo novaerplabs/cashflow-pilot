@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_onboarding_wizard_view_form" model="ir.ui.view">
+        <field name="name">nova.onboarding.wizard.form</field>
+        <field name="model">nova.onboarding.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="state" widget="statusbar"
+                       statusbar_visible="journals,threshold,templates,readiness,done" readonly="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="currency_id" invisible="1"/>
+
+                <group invisible="state != 'journals'">
+                    <p>Select the bank and cash journals that make up your cash position.</p>
+                    <field name="journal_ids" widget="many2many_tags"/>
+                </group>
+
+                <group invisible="state != 'threshold'">
+                    <p>Set the minimum cash balance you want to be warned about.</p>
+                    <field name="min_threshold"/>
+                </group>
+
+                <group invisible="state != 'templates'">
+                    <p>Tick the recurring commitments that apply and set their amounts.</p>
+                    <field name="template_line_ids">
+                        <list editable="bottom">
+                            <field name="selected" widget="boolean_toggle"/>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="frequency"/>
+                            <field name="day_rule"/>
+                            <field name="amount"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </group>
+
+                <group invisible="state != 'readiness'">
+                    <p>Data readiness findings (non-blocking - you can proceed regardless):</p>
+                    <field name="readiness_issue_ids" readonly="1" nolabel="1">
+                        <list>
+                            <field name="severity" widget="badge" optional="show"/>
+                            <field name="description"/>
+                        </list>
+                    </field>
+                </group>
+
+                <group invisible="state != 'done'">
+                    <p>Your cash flow forecast is ready. Click Finish to open the Cockpit.</p>
+                </group>
+
+                <footer>
+                    <button name="action_back" type="object" string="Back" invisible="state == 'journals'"/>
+                    <button name="action_next" type="object" string="Next" class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <button name="action_finish" type="object" string="Finish" class="btn-primary"
+                            invisible="state != 'done'"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_onboarding_wizard_action" model="ir.actions.act_window">
+        <field name="name">Onboarding Wizard</field>
+        <field name="res_model">nova.onboarding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'extra-large'}</field>
+    </record>
+
+    <menuitem id="nova_menu_onboarding"
+              name="Onboarding Wizard"
+              parent="nova_menu_configuration"
+              action="nova_onboarding_wizard_action"
+              sequence="40"
+              groups="nova_group_manager"/>
+
+</odoo>

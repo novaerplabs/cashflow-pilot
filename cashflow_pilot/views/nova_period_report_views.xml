@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_period_report_view_list" model="ir.ui.view">
+        <field name="name">nova.period.report.list</field>
+        <field name="model">nova.period.report</field>
+        <field name="arch" type="xml">
+            <list default_order="period_start" create="false" edit="false" delete="false">
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="granularity"/>
+                <field name="opening"/>
+                <field name="inflow"/>
+                <field name="outflow"/>
+                <field name="net"/>
+                <field name="closing"/>
+                <field name="below_threshold"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_period_report_view_search" model="ir.ui.view">
+        <field name="name">nova.period.report.search</field>
+        <field name="model">nova.period.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="filter_week" string="Weekly" domain="[('granularity', '=', 'week')]"/>
+                <filter name="filter_month" string="Monthly" domain="[('granularity', '=', 'month')]"/>
+                <filter name="filter_below_threshold" string="Below Threshold" domain="[('below_threshold', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_period_report_view_pivot" model="ir.ui.view">
+        <field name="name">nova.period.report.pivot</field>
+        <field name="model">nova.period.report</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="period_start" type="row"/>
+                <field name="opening" type="measure"/>
+                <field name="inflow" type="measure"/>
+                <field name="outflow" type="measure"/>
+                <field name="net" type="measure"/>
+                <field name="closing" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="nova_period_report_view_graph" model="ir.ui.view">
+        <field name="name">nova.period.report.graph</field>
+        <field name="model">nova.period.report</field>
+        <field name="arch" type="xml">
+            <graph type="line">
+                <field name="period_start" type="row"/>
+                <field name="closing" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="nova_period_report_action" model="ir.actions.act_window">
+        <field name="name">Period Report</field>
+        <field name="res_model">nova.period.report</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="context">{'search_default_filter_week': 1}</field>
+    </record>
+
+</odoo>

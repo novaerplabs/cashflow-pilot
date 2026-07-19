@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="nova_report_forecast_pdf_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>13-Week Cash Flow Forecast</h2>
+                        <table class="table table-sm table-bordered" style="font-size: 9px;">
+                            <thead>
+                                <tr>
+                                    <th style="white-space: nowrap;">Period</th>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <th t-att-class="'text-danger' if period['below_threshold'] else ''"
+                                            style="white-space: nowrap; text-align: right;">
+                                            <t t-esc="period['period_start']"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Opening</td>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <td style="text-align: right;" t-esc="'%.0f' % period['opening']"/>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td>Inflow</td>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <td style="text-align: right;" t-esc="'%.0f' % period['inflow']"/>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td>Outflow</td>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <td style="text-align: right;" t-esc="'%.0f' % period['outflow']"/>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td><strong>Net</strong></td>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <td style="text-align: right;"><strong t-esc="'%.0f' % period['net']"/></td>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <td><strong>Closing</strong></td>
+                                    <t t-foreach="data['periods']" t-as="period">
+                                        <td t-att-class="'text-danger' if period['below_threshold'] else ''"
+                                            style="text-align: right;">
+                                            <strong t-esc="'%.0f' % period['closing']"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

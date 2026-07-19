@@ -1,0 +1,402 @@
+# Translation Template for CashFlow Pilot.
+# Copyright (C) 2026 Ashok
+# This file is distributed under the same license as the cashflow_pilot package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CashFlow Pilot 19.0.1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: \n"
+
+#: models/nova_category.py:36
+msgid "A category with code '%s' already exists for this company."
+msgstr ""
+
+#: models/nova_readiness_issue.py:110
+msgid "%(count)s posted document(s) with an outstanding balance have no due date."
+msgstr ""
+
+#: models/nova_readiness_issue.py:122
+msgid "%(count)s selected journal(s) have no posted entry in the last 30 days."
+msgstr ""
+
+#: models/nova_readiness_issue.py:134
+msgid "%(count)s foreign currency(ies) with open balances have no exchange rate"
+msgstr ""
+
+#: models/nova_readiness_issue.py:151
+msgid "%(count)s draft invoice(s)/bill(s) are older than 7 days."
+msgstr ""
+
+#: models/nova_readiness_issue.py:172
+#: views/nova_readiness_issue_views.xml:46
+msgid "Data Readiness Check"
+msgstr ""
+
+#: models/nova_recurring_item.py:59
+msgid "Interval must be at least 1."
+msgstr ""
+
+#: models/nova_recurring_item.py:65
+msgid "Weekly recurring items require a weekday."
+msgstr ""
+
+#: models/nova_recurring_item.py:67
+msgid "Monthly, quarterly, and yearly recurring items require a day of month."
+msgstr ""
+
+#: models/nova_recurring_item.py:69
+msgid "Day of month must be between 1 and 31."
+msgstr ""
+
+#: models/nova_recurring_item.py:75
+msgid "Use the 'Revise Amount' wizard to change the amount of an active recurring item (BR-08)."
+msgstr ""
+
+#: models/nova_recurring_item.py:174
+msgid "No upcoming occurrences"
+msgstr ""
+
+#: models/res_company.py:46
+msgid "The 26-week horizon requires CashFlow Pilot Pro. Choose 4 or 13 weeks."
+msgstr ""
+
+#: models/res_company.py:55
+msgid "A reason note is required when overriding the opening balance."
+msgstr ""
+
+#: models/res_company.py:68
+msgid "Opening balance overridden to %(amount)s. Reason: %(note)s"
+msgstr ""
+
+#: models/res_company.py:118
+msgid "Cash flow recovered: no projected period is below the minimum threshold."
+msgstr ""
+
+#: models/res_company.py:127
+msgid "The forecast projects at least one period below the minimum cash threshold."
+msgstr ""
+
+#: models/res_company.py:129
+msgid "Low point: %(amount)s in the week of %(week)s (threshold %(threshold)s)."
+msgstr ""
+
+#: models/res_company.py:141
+msgid "Cash flow threshold breach"
+msgstr ""
+
+#: wizard/nova_bulk_reschedule_wizard.py:30
+msgid "Select at least one document to reschedule."
+msgstr ""
+
+#: wizard/nova_onboarding_wizard.py:83
+msgid "Select at least one bank or cash journal to continue."
+msgstr ""
+
+#: wizard/nova_onboarding_wizard.py:105
+#: wizard/nova_onboarding_wizard_views.xml:74
+msgid "Onboarding Wizard"
+msgstr ""
+
+#: wizard/nova_recurring_revise_wizard.py:20
+msgid "Amount revisions apply only to active recurring items."
+msgstr ""
+
+#: views/cashflow_menus.xml:5
+#: views/res_config_settings_views.xml:10
+msgid "Cash Flow"
+msgstr ""
+
+#: views/cashflow_menus.xml:10
+#: views/res_config_settings_views.xml:22
+msgid "Forecast"
+msgstr ""
+
+#: views/cashflow_menus.xml:16
+msgid "Planning"
+msgstr ""
+
+#: views/cashflow_menus.xml:22
+msgid "Configuration"
+msgstr ""
+
+#: views/nova_category_views.xml:45
+msgid "Inflow"
+msgstr ""
+
+#: views/nova_category_views.xml:46
+msgid "Outflow"
+msgstr ""
+
+#: views/nova_category_views.xml:48
+msgid "Direction"
+msgstr ""
+
+#: views/nova_category_views.xml:60
+msgid "Categories"
+msgstr ""
+
+#: views/nova_cockpit_views.xml:10
+msgid "Cockpit"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:63
+msgid "Inflows"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:64
+msgid "Outflows"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:65
+msgid "At-Risk (Excluded)"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:67
+msgid "Period"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:68
+#: views/nova_manual_item_views.xml:102
+#: views/nova_move_info_views.xml:118
+#: views/nova_recurring_item_views.xml:84
+msgid "Category"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:69
+#: views/nova_move_info_views.xml:117
+msgid "Partner"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:70
+msgid "Source"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:79
+msgid "Cash Calendar"
+msgstr ""
+
+#: views/nova_forecast_line_views.xml:119
+msgid "Forecast Lines"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:27
+msgid "Mark Realized"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:29
+#: wizard/nova_bulk_reschedule_wizard_views.xml:17
+#: wizard/nova_onboarding_wizard_views.xml:59
+#: wizard/nova_recurring_revise_wizard_views.xml:17
+msgid "Cancel"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:83
+msgid "Planned Items"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:97
+msgid "Planned"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:98
+msgid "Realized"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:99
+msgid "Cancelled"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:101
+msgid "State"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:103
+msgid "Month"
+msgstr ""
+
+#: views/nova_manual_item_views.xml:115
+msgid "Planned One-off Items"
+msgstr ""
+
+#: views/nova_move_info_views.xml:51
+msgid "Risk"
+msgstr ""
+
+#: views/nova_move_info_views.xml:90
+msgid "Cash Flow Items"
+msgstr ""
+
+#: views/nova_move_info_views.xml:105
+msgid "This Week"
+msgstr ""
+
+#: views/nova_move_info_views.xml:108
+msgid "Next Week"
+msgstr ""
+
+#: views/nova_move_info_views.xml:111
+msgid "Overdue"
+msgstr ""
+
+#: views/nova_move_info_views.xml:113
+msgid "At-Risk"
+msgstr ""
+
+#: views/nova_move_info_views.xml:114
+msgid "Excluded"
+msgstr ""
+
+#: views/nova_move_info_views.xml:116
+msgid "Week"
+msgstr ""
+
+#: views/nova_move_info_views.xml:145
+msgid "Expected Receipts"
+msgstr ""
+
+#: views/nova_move_info_views.xml:152
+msgid "Expected Payments"
+msgstr ""
+
+#: views/nova_move_info_views.xml:159
+msgid "At-Risk Invoices"
+msgstr ""
+
+#: views/nova_period_report_views.xml:27
+msgid "Weekly"
+msgstr ""
+
+#: views/nova_period_report_views.xml:28
+msgid "Monthly"
+msgstr ""
+
+#: views/nova_period_report_views.xml:29
+msgid "Below Threshold"
+msgstr ""
+
+#: views/nova_readiness_issue_views.xml:15
+msgid "View Records"
+msgstr ""
+
+#: views/nova_readiness_issue_views.xml:25
+msgid "Warning"
+msgstr ""
+
+#: views/nova_readiness_issue_views.xml:26
+msgid "Info"
+msgstr ""
+
+#: views/nova_readiness_issue_views.xml:53
+msgid "Run Data Readiness Check"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:28
+msgid "Activate"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:30
+msgid "End"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:32
+msgid "%(nova_recurring_revise_wizard_action)d"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:32
+msgid "Revise Amount"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:59
+msgid "Revisions"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:81
+msgid "Active"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:82
+msgid "Ended"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:85
+msgid "Frequency"
+msgstr ""
+
+#: views/nova_recurring_item_views.xml:97
+msgid "Recurring Items"
+msgstr ""
+
+#: views/res_config_settings_views.xml:11
+msgid "Cash Position"
+msgstr ""
+
+#: views/res_config_settings_views.xml:12
+msgid "Cash Flow Journals"
+msgstr ""
+
+#: views/res_config_settings_views.xml:13
+msgid "Bank and cash journals composing the cash position"
+msgstr ""
+
+#: views/res_config_settings_views.xml:16
+msgid "Minimum Cash Threshold"
+msgstr ""
+
+#: views/res_config_settings_views.xml:17
+msgid "Minimum cash balance before a period is flagged as breached"
+msgstr ""
+
+#: views/res_config_settings_views.xml:23
+msgid "Forecast Horizon"
+msgstr ""
+
+#: views/res_config_settings_views.xml:26
+msgid "Week Start Day"
+msgstr ""
+
+#: views/res_config_settings_views.xml:30
+msgid "Opening Balance"
+msgstr ""
+
+#: views/res_config_settings_views.xml:31
+msgid "Override Opening Balance"
+msgstr ""
+
+#: views/res_config_settings_views.xml:32
+msgid "Replace the computed opening balance with a manual figure (FR-CFG-07)"
+msgstr ""
+
+#: views/res_config_settings_views.xml:40
+msgid "Reason"
+msgstr ""
+
+#: views/res_config_settings_views.xml:41
+msgid "Required when overriding"
+msgstr ""
+
+#: views/res_config_settings_views.xml:59
+msgid "Settings"
+msgstr ""
+
+#: wizard/nova_bulk_reschedule_wizard_views.xml:16
+msgid "Reschedule"
+msgstr ""
+
+#: wizard/nova_onboarding_wizard_views.xml:54
+msgid "Back"
+msgstr ""
+
+#: wizard/nova_onboarding_wizard_views.xml:55
+msgid "Next"
+msgstr ""
+
+#: wizard/nova_onboarding_wizard_views.xml:57
+msgid "Finish"
+msgstr ""
+
+#: wizard/nova_recurring_revise_wizard_views.xml:16
+msgid "Confirm"
+msgstr ""
+

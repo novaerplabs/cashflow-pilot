@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.TrendChart">
+        <div class="o_nova_trend_chart card">
+            <div class="card-body">
+                <h5 class="card-title">Closing Balance Trend</h5>
+                <div style="position: relative; height: 260px;">
+                    <canvas t-ref="canvas"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

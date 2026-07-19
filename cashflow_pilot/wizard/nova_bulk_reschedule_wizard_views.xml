@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_bulk_reschedule_wizard_view_form" model="ir.ui.view">
+        <field name="name">nova.bulk.reschedule.wizard.form</field>
+        <field name="model">nova.bulk.reschedule.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="move_info_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="mode" widget="radio"/>
+                    <field name="shift_days" invisible="mode != 'shift'"/>
+                    <field name="new_date" invisible="mode != 'set_date'"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Reschedule" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_move_info_action_bulk_reschedule" model="ir.actions.server">
+        <field name="name">Bulk Reschedule</field>
+        <field name="model_id" ref="model_nova_move_info"/>
+        <field name="binding_model_id" ref="model_nova_move_info"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = {
+    'type': 'ir.actions.act_window',
+    'res_model': 'nova.bulk.reschedule.wizard',
+    'view_mode': 'form',
+    'target': 'new',
+    'context': {'dialog_size': 'medium', 'default_move_info_ids': records.ids},
+}</field>
+    </record>
+
+</odoo>

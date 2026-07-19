@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_recurring_item_view_list" model="ir.ui.view">
+        <field name="name">nova.recurring.item.list</field>
+        <field name="model">nova.recurring.item</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="direction"/>
+                <field name="category_id"/>
+                <field name="amount_today"/>
+                <field name="frequency"/>
+                <field name="next_occurrences"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'ended'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_recurring_item_view_form" model="ir.ui.view">
+        <field name="name">nova.recurring.item.form</field>
+        <field name="model">nova.recurring.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_end" type="object" string="End"
+                            invisible="state != 'active'"/>
+                    <button name="%(nova_recurring_revise_wizard_action)d" type="action" string="Revise Amount"
+                            invisible="state != 'active'" context="{'default_item_id': id}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,ended"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="direction"/>
+                            <field name="category_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="amount" readonly="state == 'active'"/>
+                            <field name="amount_today"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="frequency"/>
+                            <field name="interval"/>
+                            <field name="day_rule" invisible="frequency == 'weekly'"/>
+                            <field name="weekday" invisible="frequency != 'weekly'"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="next_occurrences"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Revisions">
+                            <field name="revision_ids" readonly="1">
+                                <list>
+                                    <field name="effective_from"/>
+                                    <field name="amount"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_recurring_item_view_search" model="ir.ui.view">
+        <field name="name">nova.recurring.item.search</field>
+        <field name="model">nova.recurring.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <filter name="filter_active" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="filter_ended" string="Ended" domain="[('state', '=', 'ended')]"/>
+                <separator/>
+                <filter name="group_by_category" string="Category" context="{'group_by': 'category_id'}"/>
+                <filter name="group_by_frequency" string="Frequency" context="{'group_by': 'frequency'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_recurring_item_action" model="ir.actions.act_window">
+        <field name="name">Recurring Items</field>
+        <field name="res_model">nova.recurring.item</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="nova_menu_recurring_items"
+              name="Recurring Items"
+              parent="nova_menu_planning"
+              action="nova_recurring_item_action"
+              sequence="10"
+              groups="nova_group_user"/>
+
+</odoo>

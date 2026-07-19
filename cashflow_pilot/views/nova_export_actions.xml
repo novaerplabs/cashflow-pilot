@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- R-02/R-03: bound to nova.move.info's list/form views' Action menu.
+         group_ids explicit: export is read-only, but nova.move.info's ACL
+         only grants write to User/Manager, and the server-action runner
+         falls back to a write-access check when no group_ids is set - so
+         without this, Viewers (who CAN see these worklists) would get a
+         spurious Access Error trying to export. -->
+    <record id="nova_move_info_action_export_xlsx" model="ir.actions.server">
+        <field name="name">Export to Excel</field>
+        <field name="model_id" ref="model_nova_move_info"/>
+        <field name="binding_model_id" ref="model_nova_move_info"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_xlsx()</field>
+        <field name="group_ids" eval="[(4, ref('nova_group_viewer'))]"/>
+    </record>
+
+    <!-- R-04: bound to nova.recurring.item's list/form views' Action menu -->
+    <record id="nova_recurring_item_action_export_xlsx" model="ir.actions.server">
+        <field name="name">Export to Excel</field>
+        <field name="model_id" ref="model_nova_recurring_item"/>
+        <field name="binding_model_id" ref="model_nova_recurring_item"/>
+        <field name="binding_type">action</field>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_xlsx()</field>
+    </record>
+
+</odoo>

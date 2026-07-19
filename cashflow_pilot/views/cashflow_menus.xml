@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="nova_menu_root"
+              name="Cash Flow"
+              sequence="10"
+              groups="nova_group_viewer"/>
+
+    <menuitem id="nova_menu_forecast"
+              name="Forecast"
+              parent="nova_menu_root"
+              sequence="20"
+              groups="nova_group_viewer"/>
+
+    <menuitem id="nova_menu_planning"
+              name="Planning"
+              parent="nova_menu_root"
+              sequence="30"
+              groups="nova_group_user"/>
+
+    <menuitem id="nova_menu_configuration"
+              name="Configuration"
+              parent="nova_menu_root"
+              sequence="90"
+              groups="nova_group_manager"/>
+
+</odoo>

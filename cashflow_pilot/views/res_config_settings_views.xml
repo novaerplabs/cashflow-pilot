@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.nova</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Cash Flow" string="Cash Flow" name="cashflow_pilot" groups="cashflow_pilot.nova_group_manager">
+                    <block title="Cash Position" name="nova_cash_position_setting_container">
+                        <setting id="nova_journals" string="Cash Flow Journals"
+                                 help="Bank and cash journals composing the cash position">
+                            <field name="nova_journal_ids" widget="many2many_tags"/>
+                        </setting>
+                        <setting id="nova_threshold" string="Minimum Cash Threshold"
+                                 help="Minimum cash balance before a period is flagged as breached">
+                            <field name="nova_currency_id" invisible="1"/>
+                            <field name="nova_min_threshold"/>
+                        </setting>
+                    </block>
+                    <block title="Forecast" name="nova_forecast_setting_container">
+                        <setting id="nova_horizon" string="Forecast Horizon">
+                            <field name="nova_horizon" widget="radio"/>
+                        </setting>
+                        <setting id="nova_week_start" string="Week Start Day">
+                            <field name="nova_week_start"/>
+                        </setting>
+                    </block>
+                    <block title="Opening Balance" name="nova_opening_setting_container">
+                        <setting id="nova_opening_override" string="Override Opening Balance"
+                                 help="Replace the computed opening balance with a manual figure (FR-CFG-07)">
+                            <field name="nova_opening_override_active"/>
+                            <div class="content-group" invisible="not nova_opening_override_active">
+                                <div class="row mt16">
+                                    <label for="nova_opening_override" class="col-lg-3 o_light_label"/>
+                                    <field name="nova_opening_override"/>
+                                </div>
+                                <div class="row mt8">
+                                    <label for="nova_opening_override_note" string="Reason" class="col-lg-3 o_light_label"/>
+                                    <field name="nova_opening_override_note" placeholder="Required when overriding"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="nova_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'cashflow_pilot'}</field>
+    </record>
+
+    <menuitem id="nova_menu_settings"
+              name="Settings"
+              parent="nova_menu_configuration"
+              action="nova_config_settings_action"
+              sequence="10"
+              groups="nova_group_manager"/>
+
+</odoo>

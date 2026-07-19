@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_account_move_view_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.nova.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_open_nova_move_info" type="object"
+                        class="oe_stat_button" icon="fa-line-chart"
+                        invisible="not nova_move_info_id"
+                        groups="cashflow_pilot.nova_group_viewer">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Cash Flow</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

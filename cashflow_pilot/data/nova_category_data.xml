@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="nova_category_customer_collections" model="nova.category">
+        <field name="name">Customer Collections</field>
+        <field name="code">CUST_COLLECT</field>
+        <field name="direction">in</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="nova_category_other_income" model="nova.category">
+        <field name="name">Other Income</field>
+        <field name="code">OTHER_INCOME</field>
+        <field name="direction">in</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="nova_category_vendor_payments" model="nova.category">
+        <field name="name">Vendor Payments</field>
+        <field name="code">VENDOR_PAY</field>
+        <field name="direction">out</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="nova_category_payroll" model="nova.category">
+        <field name="name">Payroll</field>
+        <field name="code">PAYROLL</field>
+        <field name="direction">out</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="nova_category_rent_utilities" model="nova.category">
+        <field name="name">Rent &amp; Utilities</field>
+        <field name="code">RENT_UTIL</field>
+        <field name="direction">out</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="nova_category_taxes_statutory" model="nova.category">
+        <field name="name">Taxes &amp; Statutory</field>
+        <field name="code">TAX_STAT</field>
+        <field name="direction">out</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="nova_category_loan_finance" model="nova.category">
+        <field name="name">Loan &amp; Finance</field>
+        <field name="code">LOAN_FIN</field>
+        <field name="direction">out</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="nova_category_capex" model="nova.category">
+        <field name="name">Capex</field>
+        <field name="code">CAPEX</field>
+        <field name="direction">out</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="nova_category_other_expense" model="nova.category">
+        <field name="name">Other Expense</field>
+        <field name="code">OTHER_EXP</field>
+        <field name="direction">out</field>
+        <field name="sequence">70</field>
+    </record>
+
+</odoo>

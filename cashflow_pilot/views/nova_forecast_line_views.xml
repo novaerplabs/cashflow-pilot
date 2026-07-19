@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_forecast_line_view_list" model="ir.ui.view">
+        <field name="name">nova.forecast.line.list</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <list default_order="expected_date" create="false" edit="false" delete="false">
+                <field name="expected_date"/>
+                <field name="period_start"/>
+                <field name="partner_id"/>
+                <field name="category_id"/>
+                <field name="source_type"/>
+                <field name="direction"/>
+                <field name="amount_effective"/>
+                <field name="at_risk_excluded"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_view_form" model="ir.ui.view">
+        <field name="name">nova.forecast.line.form</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_source" type="object" class="oe_stat_button" icon="fa-external-link">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Source</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="category_id"/>
+                            <field name="source_type"/>
+                            <field name="direction"/>
+                        </group>
+                        <group>
+                            <field name="expected_date"/>
+                            <field name="period_start"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount_company"/>
+                            <field name="probability"/>
+                            <field name="amount_effective"/>
+                            <field name="at_risk_excluded"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_view_search" model="ir.ui.view">
+        <field name="name">nova.forecast.line.search</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="category_id"/>
+                <filter name="filter_in" string="Inflows" domain="[('direction', '=', 'in')]"/>
+                <filter name="filter_out" string="Outflows" domain="[('direction', '=', 'out')]"/>
+                <filter name="filter_at_risk_excluded" string="At-Risk (Excluded)" domain="[('at_risk_excluded', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_period" string="Period" context="{'group_by': 'period_start'}"/>
+                <filter name="group_by_category" string="Category" context="{'group_by': 'category_id'}"/>
+                <filter name="group_by_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="group_by_source" string="Source" context="{'group_by': 'source_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_view_calendar" model="ir.ui.view">
+        <field name="name">nova.forecast.line.calendar</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <calendar date_start="expected_date" string="Cash Calendar" color="direction" mode="month" create="false">
+                <field name="partner_id"/>
+                <field name="amount_effective"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_view_pivot" model="ir.ui.view">
+        <field name="name">nova.forecast.line.pivot</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="period_start" type="col"/>
+                <field name="category_id" type="row"/>
+                <field name="amount_effective" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_view_graph" model="ir.ui.view">
+        <field name="name">nova.forecast.line.graph</field>
+        <field name="model">nova.forecast.line</field>
+        <field name="arch" type="xml">
+            <graph type="bar" stacked="True">
+                <field name="period_start" type="row"/>
+                <field name="category_id" type="col"/>
+                <field name="amount_effective" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="nova_forecast_line_action" model="ir.actions.act_window">
+        <field name="name">Forecast Lines</field>
+        <field name="res_model">nova.forecast.line</field>
+        <field name="view_mode">list,form,pivot,graph,calendar</field>
+        <field name="context">{'search_default_group_by_period': 1}</field>
+        <field name="domain">[]</field>
+    </record>
+
+    <menuitem id="nova_menu_forecast_lines"
+              name="Forecast Lines"
+              parent="nova_menu_forecast"
+              action="nova_forecast_line_action"
+              sequence="10"
+              groups="nova_group_viewer"/>
+
+</odoo>

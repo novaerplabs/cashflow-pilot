@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_move_info_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Move Info multi-company</field>
+        <field name="model_id" ref="model_nova_move_info"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_recurring_item_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Recurring Item multi-company</field>
+        <field name="model_id" ref="model_nova_recurring_item"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_manual_item_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Manual Item multi-company</field>
+        <field name="model_id" ref="model_nova_manual_item"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_category_rule_shared" model="ir.rule">
+        <field name="name">Cash Flow: Category shared or own company</field>
+        <field name="model_id" ref="model_nova_category"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_forecast_line_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Forecast Line multi-company</field>
+        <field name="model_id" ref="model_nova_forecast_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_period_report_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Period Report multi-company</field>
+        <field name="model_id" ref="model_nova_period_report"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="nova_readiness_issue_rule_company" model="ir.rule">
+        <field name="name">Cash Flow: Readiness Issue multi-company</field>
+        <field name="model_id" ref="model_nova_readiness_issue"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

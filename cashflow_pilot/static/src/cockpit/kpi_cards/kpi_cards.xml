@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.KpiCards">
+        <div class="o_nova_kpi_cards row g-2 p-2">
+            <t t-if="props.loading">
+                <div class="col-12 text-muted">Loading KPIs...</div>
+            </t>
+            <t t-elif="props.kpis and props.kpis.has_data">
+                <div class="col-6 col-lg-3">
+                    <div class="card o_nova_kpi_card">
+                        <div class="card-body">
+                            <div class="text-muted small">
+                                Cash Today
+                                <span class="badge text-bg-info ms-1" t-if="props.kpis.opening_override_active"
+                                      title="Opening balance manually overridden (FR-CFG-07)">
+                                    Override
+                                </span>
+                            </div>
+                            <div class="fs-4" t-esc="formatAmount(props.kpis.cash_today)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card o_nova_kpi_card">
+                        <div class="card-body">
+                            <div class="text-muted small">
+                                Low Point (<t t-esc="this.formatDate(props.kpis.low_point_week)"/>)
+                            </div>
+                            <div class="fs-4" t-esc="formatAmount(props.kpis.low_point)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card o_nova_kpi_card">
+                        <div class="card-body">
+                            <div class="text-muted small">Runway</div>
+                            <div class="fs-4" t-esc="runwayLabel"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="card o_nova_kpi_card">
+                        <div class="card-body">
+                            <div class="text-muted small">Net Cash Flow, Next 4 Weeks</div>
+                            <div class="fs-4" t-esc="formatAmount(props.kpis.net_4week_flow)"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="col-12 text-muted">
+                    No forecast yet. Configure your Cash Flow journals in Settings, then click "Refresh Now".
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

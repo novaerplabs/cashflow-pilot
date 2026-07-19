@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_manual_item_view_list" model="ir.ui.view">
+        <field name="name">nova.manual.item.list</field>
+        <field name="model">nova.manual.item</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="direction"/>
+                <field name="category_id"/>
+                <field name="expected_date"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'realized'"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_manual_item_view_form" model="ir.ui.view">
+        <field name="name">nova.manual.item.form</field>
+        <field name="model">nova.manual.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_realized" type="object" string="Mark Realized"
+                            invisible="state != 'planned'" class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'planned'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="planned,realized,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="direction"/>
+                            <field name="category_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="expected_date"/>
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="realized_date" invisible="state != 'realized'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_manual_item_view_kanban" model="ir.ui.view">
+        <field name="name">nova.manual.item.kanban</field>
+        <field name="model">nova.manual.item</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="expected_date"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="expected_date"/></div>
+                            <div><field name="amount" widget="monetary"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="nova_manual_item_view_calendar" model="ir.ui.view">
+        <field name="name">nova.manual.item.calendar</field>
+        <field name="model">nova.manual.item</field>
+        <field name="arch" type="xml">
+            <calendar date_start="expected_date" string="Planned Items" color="direction" mode="month">
+                <field name="name"/>
+                <field name="amount"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="nova_manual_item_view_search" model="ir.ui.view">
+        <field name="name">nova.manual.item.search</field>
+        <field name="model">nova.manual.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <filter name="filter_planned" string="Planned" domain="[('state', '=', 'planned')]"/>
+                <filter name="filter_realized" string="Realized" domain="[('state', '=', 'realized')]"/>
+                <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                <filter name="group_by_category" string="Category" context="{'group_by': 'category_id'}"/>
+                <filter name="group_by_month" string="Month" context="{'group_by': 'expected_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_manual_item_action" model="ir.actions.act_window">
+        <field name="name">Planned One-off Items</field>
+        <field name="res_model">nova.manual.item</field>
+        <field name="view_mode">list,kanban,calendar,form</field>
+    </record>
+
+    <menuitem id="nova_menu_manual_items"
+              name="Planned One-off Items"
+              parent="nova_menu_planning"
+              action="nova_manual_item_action"
+              sequence="20"
+              groups="nova_group_user"/>
+
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.ForecastGrid">
+        <div class="o_nova_forecast_grid p-2">
+            <t t-if="props.loading">
+                <div class="text-muted">Loading grid...</div>
+            </t>
+            <t t-elif="periods.length">
+                <div class="o_nova_grid_scroll">
+                <table class="table table-sm table-bordered o_nova_grid_table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                <th t-att-class="period.below_threshold ? 'o_nova_breach' : ''">
+                                    <t t-esc="this.formatPeriodHeader(period)"/>
+                                </th>
+                            </t>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="o_nova_row_opening">
+                            <td>Opening</td>
+                            <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                <td t-esc="formatAmount(period.opening)"/>
+                            </t>
+                        </tr>
+
+                        <t t-foreach="inCategories" t-as="category" t-key="category.category_id">
+                            <tr class="o_nova_row_category">
+                                <td><t t-esc="category.name"/></td>
+                                <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                    <td class="o_nova_cell_clickable"
+                                        t-on-click="() => this.onCellClick(period, category, 'in')">
+                                        <t t-esc="formatAmount(amountForCategory(category, period))"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+
+                        <t t-foreach="outCategories" t-as="category" t-key="category.category_id">
+                            <tr class="o_nova_row_category">
+                                <td><t t-esc="category.name"/></td>
+                                <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                    <td class="o_nova_cell_clickable"
+                                        t-on-click="() => this.onCellClick(period, category, 'out')">
+                                        <t t-esc="formatAmount(amountForCategory(category, period))"/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+
+                        <tr class="o_nova_row_net fw-bold">
+                            <td>Net</td>
+                            <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                <td t-esc="formatAmount(period.net)"/>
+                            </t>
+                        </tr>
+                        <tr class="o_nova_row_closing fw-bold">
+                            <td>Closing</td>
+                            <t t-foreach="periods" t-as="period" t-key="period.period_start">
+                                <td class="o_nova_cell_clickable"
+                                    t-att-class="period.below_threshold ? 'o_nova_breach' : ''"
+                                    t-on-click="() => this.onCellClick(period, false, false)">
+                                    <t t-esc="formatAmount(period.closing)"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="text-muted">No forecast data yet.</div>
+            </t>
+        </div>
+    </t>
+
+</templates>

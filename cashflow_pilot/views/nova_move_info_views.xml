@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_move_info_view_list" model="ir.ui.view">
+        <field name="name">nova.move.info.list</field>
+        <field name="model">nova.move.info</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" default_order="effective_date">
+                <field name="partner_id"/>
+                <field name="move_id"/>
+                <field name="due_date"/>
+                <field name="expected_date"/>
+                <field name="effective_date"/>
+                <field name="residual_company"/>
+                <field name="category_id"/>
+                <field name="at_risk"/>
+                <field name="exclude_from_forecast"/>
+                <field name="company_currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nova_move_info_view_form" model="ir.ui.view">
+        <field name="name">nova.move.info.form</field>
+        <field name="model">nova.move.info</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_move" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Entry</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="direction" readonly="1"/>
+                            <field name="category_id"/>
+                        </group>
+                        <group>
+                            <field name="due_date" readonly="1"/>
+                            <field name="expected_date"/>
+                            <field name="effective_date" readonly="1"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="residual_company"/>
+                        </group>
+                    </group>
+                    <group string="Risk">
+                        <field name="at_risk"/>
+                        <field name="exclude_from_forecast"/>
+                        <field name="risk_note"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="nova_move_info_view_kanban" model="ir.ui.view">
+        <field name="name">nova.move.info.kanban</field>
+        <field name="model">nova.move.info</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="effective_date:week" class="o_kanban_small_column">
+                <field name="partner_id"/>
+                <field name="residual_company"/>
+                <field name="company_currency_id"/>
+                <field name="category_id"/>
+                <field name="at_risk"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <strong><field name="partner_id"/></strong>
+                            <div><field name="category_id"/></div>
+                            <div><field name="residual_company" widget="monetary"/></div>
+                            <div t-if="record.at_risk.raw_value" class="text-danger">At-Risk</div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="nova_move_info_view_calendar" model="ir.ui.view">
+        <field name="name">nova.move.info.calendar</field>
+        <field name="model">nova.move.info</field>
+        <field name="arch" type="xml">
+            <calendar date_start="effective_date" string="Cash Flow Items" color="direction" mode="month">
+                <field name="partner_id"/>
+                <field name="residual_company"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="nova_move_info_view_search" model="ir.ui.view">
+        <field name="name">nova.move.info.search</field>
+        <field name="model">nova.move.info</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="move_id"/>
+                <field name="category_id"/>
+                <filter name="filter_this_week" string="This Week"
+                        domain="[('effective_date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('effective_date', '&lt;', (context_today() + relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_next_week" string="Next Week"
+                        domain="[('effective_date', '&gt;=', (context_today() + relativedelta(weeks=1)).strftime('%Y-%m-%d')),
+                                 ('effective_date', '&lt;', (context_today() + relativedelta(weeks=2)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('effective_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_at_risk" string="At-Risk" domain="[('at_risk', '=', True)]"/>
+                <filter name="filter_excluded" string="Excluded" domain="[('exclude_from_forecast', '=', True)]"/>
+                <separator/>
+                <filter name="group_by_week" string="Week" context="{'group_by': 'effective_date:week'}"/>
+                <filter name="group_by_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                <filter name="group_by_category" string="Category" context="{'group_by': 'category_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="nova_move_info_action_receipts" model="ir.actions.act_window">
+        <field name="name">Expected Receipts</field>
+        <field name="res_model">nova.move.info</field>
+        <field name="view_mode">list,kanban,calendar,form</field>
+        <field name="domain">[('direction', '=', 'in')]</field>
+    </record>
+
+    <record id="nova_move_info_action_payments" model="ir.actions.act_window">
+        <field name="name">Expected Payments</field>
+        <field name="res_model">nova.move.info</field>
+        <field name="view_mode">list,kanban,calendar,form</field>
+        <field name="domain">[('direction', '=', 'out')]</field>
+    </record>
+
+    <record id="nova_move_info_action_at_risk" model="ir.actions.act_window">
+        <field name="name">At-Risk Invoices</field>
+        <field name="res_model">nova.move.info</field>
+        <field name="view_mode">list,kanban,calendar,form</field>
+        <field name="domain">[('at_risk', '=', True)]</field>
+    </record>
+
+    <menuitem id="nova_menu_expected_receipts"
+              name="Expected Receipts"
+              parent="nova_menu_forecast"
+              action="nova_move_info_action_receipts"
+              sequence="20"
+              groups="nova_group_viewer"/>
+
+    <menuitem id="nova_menu_expected_payments"
+              name="Expected Payments"
+              parent="nova_menu_forecast"
+              action="nova_move_info_action_payments"
+              sequence="30"
+              groups="nova_group_viewer"/>
+
+    <menuitem id="nova_menu_at_risk"
+              name="At-Risk Invoices"
+              parent="nova_menu_forecast"
+              action="nova_move_info_action_at_risk"
+              sequence="40"
+              groups="nova_group_viewer"/>
+
+</odoo>

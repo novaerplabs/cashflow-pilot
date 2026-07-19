@@ -1,0 +1,49 @@
+.o_nova_cockpit {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .o_nova_kpi_card {
+        height: 100%;
+    }
+
+    .o_nova_grid_scroll {
+        overflow-x: auto;
+        max-width: 100%;
+    }
+
+    .o_nova_grid_table {
+        th, td {
+            white-space: nowrap;
+            text-align: right;
+        }
+        th:first-child, td:first-child {
+            text-align: left;
+            white-space: normal;
+            position: sticky;
+            left: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+    }
+
+    .o_nova_cell_clickable {
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--o-nova-hover-bg, rgba(0, 0, 0, 0.05));
+        }
+    }
+
+    .o_nova_breach {
+        background-color: rgba(220, 53, 69, 0.15);
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .o_nova_cockpit_charts {
+        margin-bottom: 1rem;
+    }
+}

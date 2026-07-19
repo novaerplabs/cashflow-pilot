@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.ReadinessStrip">
+        <div class="alert alert-warning o_nova_readiness_strip m-2" t-if="state.issues.length" role="alert">
+            <i class="fa fa-info-circle me-1"/>
+            <span t-esc="state.issues.length"/> data readiness issue(s) found.
+            <a href="#" t-on-click.prevent="openReadiness">Review</a>
+        </div>
+    </t>
+
+</templates>

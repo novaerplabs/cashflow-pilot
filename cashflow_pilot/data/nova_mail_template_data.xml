@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="nova_mail_template_breach_alert" model="mail.template">
+        <field name="name">Cash Flow: Breach Alert</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="subject">Cash Flow Alert: {{ object.name }} projected to breach minimum threshold</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello,</p>
+                <p>
+                    The cash flow forecast for <strong t-out="object.name"/> projects at least one
+                    period in the coming horizon with a closing balance below the configured
+                    minimum threshold.
+                </p>
+                <p>
+                    <a t-attf-href="{{ object._get_cockpit_url() }}">Open the Cash Flow Cockpit</a>
+                    to review and respond.
+                </p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+</odoo>

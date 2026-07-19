@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.DrillDialog">
+        <Dialog title="'Cash Flow Drill-Down'" size="'lg'">
+            <div class="o_nova_drill_dialog">
+                <div class="text-muted mb-2" t-if="props.periodLabel">
+                    <t t-esc="props.periodLabel"/>
+                </div>
+                <t t-if="state.loading">
+                    <div>Loading...</div>
+                </t>
+                <t t-else="">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Partner</th>
+                                <th>Category</th>
+                                <th>Source</th>
+                                <th>Expected Date</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="state.lines" t-as="line" t-key="line.id">
+                                <td><t t-esc="line.partner"/></td>
+                                <td><t t-esc="line.category"/></td>
+                                <td><t t-esc="line.source_type"/></td>
+                                <td>
+                                    <t t-if="state.editingId === line.id">
+                                        <input type="date" t-model="state.editDate"/>
+                                        <button class="btn btn-sm btn-primary" t-on-click="() => this.confirmEdit(line)">
+                                            Save
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary" t-on-click="cancelEdit">
+                                            Cancel
+                                        </button>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="this.formatDate(line.expected_date)"/>
+                                        <a href="#" t-if="line.move_info_id" class="ms-1"
+                                           t-on-click.prevent="() => this.startEdit(line)">
+                                            <i class="fa fa-pencil"/>
+                                        </a>
+                                    </t>
+                                </td>
+                                <td class="text-end"><t t-esc="this.formatAmount(line.amount)"/></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="fw-bold">
+                                <td colspan="4">Total</td>
+                                <td class="text-end"><t t-esc="this.formatAmount(total)"/></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </t>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-secondary" t-on-click="() => props.close()">Close</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

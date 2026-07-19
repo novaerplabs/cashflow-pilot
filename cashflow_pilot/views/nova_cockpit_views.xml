@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nova_cockpit_action" model="ir.actions.client">
+        <field name="name">Cockpit</field>
+        <field name="tag">nova_cockpit</field>
+    </record>
+
+    <menuitem id="nova_menu_cockpit"
+              name="Cockpit"
+              parent="nova_menu_root"
+              action="nova_cockpit_action"
+              sequence="10"
+              groups="nova_group_viewer"/>
+
+</odoo>

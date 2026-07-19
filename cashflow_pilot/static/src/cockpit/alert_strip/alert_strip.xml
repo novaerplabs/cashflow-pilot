@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="cashflow_pilot.AlertStrip">
+        <div class="alert alert-danger o_nova_alert_strip m-2" t-if="props.breachState === 'breached'" role="alert">
+            <i class="fa fa-exclamation-triangle me-1"/>
+            Cash flow is projected to fall below your minimum threshold within the forecast horizon.
+        </div>
+    </t>
+
+</templates>
