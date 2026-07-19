@@ -13,7 +13,7 @@ journal entries, invoices, bills, or reconciliations.
 """,
     'version': '19.0.1.0.0',
     'category': 'Accounting',
-    'author': 'Ashok',
+    'author': 'NovaERP Labs',
     'license': 'LGPL-3',
     'support': 'novaerp.labs@gmail.com',
     'depends': ['account', 'mail', 'web'],
