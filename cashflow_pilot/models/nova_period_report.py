@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class NovaPeriodReport(models.Model):
@@ -221,7 +221,7 @@ class NovaPeriodReport(models.Model):
         for line in lines:
             bucket = line.period_start if granularity == 'week' \
                 else forecast_line_model._bucket_month_start(line.expected_date, today)
-            key = (line.category_id.id, line.category_id.name, line.direction)
+            key = (line.category_id.id, line.category_id.name or _('Uncategorised'), line.direction)
             row = category_rows.setdefault(key, {})
             bucket_key = fields.Date.to_string(bucket)
             row[bucket_key] = row.get(bucket_key, 0.0) + line.amount_effective
@@ -265,7 +265,7 @@ class NovaPeriodReport(models.Model):
             'lines': [{
                 'id': line.id,
                 'partner': line.partner_id.display_name or '',
-                'category': line.category_id.name or '',
+                'category': line.category_id.name or _('Uncategorised'),
                 'source_type': line.source_type,
                 'expected_date': fields.Date.to_string(line.expected_date),
                 'amount': line.amount_effective,
